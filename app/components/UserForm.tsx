@@ -15,7 +15,7 @@ const initialState: ActionState = {
     message: "",
 }
 
-export default function UserCreateForm ({ action, user, mode }: Props) {
+export default function UserForm ({ action, user, mode }: Props) {
     const [state, formAction] = useActionState(action, initialState);
 
     return (

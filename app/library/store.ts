@@ -31,3 +31,36 @@ export function createUser(data: Omit<User, "id">): User {
 
     return newUser;
 }
+
+export function getUserById(id: string): User | undefined {
+    const users = readUsers();
+
+    return users.find((u) => String(u.id) === id);
+}
+
+export function updateUser(id: string, data: Omit<User, "id">): User | null {
+    const users = readUsers();
+    const index = users.findIndex((u) => String(u.id) === id);
+
+    if(index === -1) {
+        return null
+    }
+
+    const updated: User = {...users[index], ...data};
+    users[index] = updated;
+
+    writeData(users);
+    return updated;
+}
+
+export function deleteUser(id: string): boolean {
+    const users = readUsers();
+    const filtered = users.filter((u) => String(u.id) !== id);
+
+    if (filtered.length === users.length) {
+        return false;
+    }
+
+    writeData(filtered);
+    return true;
+}

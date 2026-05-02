@@ -55,3 +55,36 @@ export async function createUserAction(prevState: ActionState, formData: FormDat
     revalidatePath("/");
     redirect("/");
 }
+
+export async function updateUserAction(id: string, prevState: ActionState, formData: FormData): Promise<ActionState> {
+    const data = {
+        name: formData.get("name") as string,
+        email: formData.get("email") as string,
+        address: formData.get("address") as string,
+        phone: formData.get("phone") as string,
+    }
+
+    const errors = validateUserForm(data);
+    if (Object.keys(errors).length > 0) {
+        return {success: false, message: "Validation Failed", errors};
+    }
+
+    const result = store.updateUser(id, data);
+    if (!result) {
+        return {success: false, message: "User Not Found"};
+    }
+
+    revalidatePath("/");
+    redirect("/");
+}
+
+export async function deleteUserAction(id: string): Promise<ActionState> {
+    const deleted = store.deleteUser(id);
+
+    if(!deleted) {
+        return {success: false, message: "User not found"};
+    }
+
+    revalidatePath("/");
+    redirect("/");
+}

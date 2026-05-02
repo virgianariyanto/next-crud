@@ -1,4 +1,6 @@
 import { User } from "../library/types";
+import Link from "next/link";
+import DeleteButton from "./DeleteButton";
 
 type Props = {
     users: User[];
@@ -39,8 +41,8 @@ export default function UserTable({users}: Props) {
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-right">
                       <div className="flex justify-end gap-3">
-                        <button className="text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</button>
-                        <button className="text-sm font-medium text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300">Delete</button>
+                        <Link href={`/user/${user.id}/edit`} className="text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</Link>
+                        <DeleteButton id={user.id} name={user.name} />
                       </div>
                     </td>
                   </tr>
