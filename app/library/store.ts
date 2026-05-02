@@ -19,3 +19,15 @@ export function getAllUsers(): User[] {
     const users = readUsers();
     return users.sort((a,b) => a.name.localeCompare(b.name))
 }
+
+export function createUser(data: Omit<User, "id">): User {
+    const users = readUsers();
+
+    const id = Date.now().toString();
+    const newUser: User = {id, ...data}
+
+    users.push(newUser);
+    writeData(users);
+
+    return newUser;
+}
